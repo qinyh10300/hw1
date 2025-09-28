@@ -9,10 +9,15 @@ from utils.jwt import encrypt_password
 
 
 class APITestCase(TestCase):
-
     def setUp(self):
-        user = User(username="testuser", password=encrypt_password(str("testuser")),
-                    nickname="test", mobile="+86.123456789012", magic_number=0, url="https://baidu.com")
+        user = User(
+            username="testuser",
+            password=encrypt_password(str("testuser")),
+            nickname="test",
+            mobile="+86.123456789012",
+            magic_number=0,
+            url="https://baidu.com",
+        )
         user.save()
         self.client = Client()
 
@@ -35,21 +40,25 @@ class APITestCase(TestCase):
         """
         data = {"username": "123", "password": "21321"}
         response = self.client.post(
-            reverse(user_views.register_user),
-            data=data,
-            content_type="application/json"
+            reverse(user_views.register_user), data=data, content_type="application/json"
         )
         json_data = response.json()
-        self.assertEqual(json_data['message'], "Error")
-        self.assertEqual(response.status_code, 500)
-
+        # print(json_data["message"], response.status_code)
+        self.assertEqual(json_data["message"], "username")
+        self.assertEqual(response.status_code, 400)
         """
         TODO: 使用正确的信息进行注册，检查返回值为成功
         """
-
         """
         TODO: 使用正确注册信息进行登录，检查返回值为成功
         """
+        data = {"username": "testuser", "password": "testuser"}  # 这里使用之前创建的用户
+        response = self.client.post(
+            reverse(user_views.login_user), data=data, content_type="application/json"
+        )
+        json_data = response.json()
+        self.assertEqual(json_data["message"], "Login successful")  # 登录成功返回信息
+        self.assertEqual(response.status_code, 200)  # 登录成功返回 200
 
     def test_logout(self):
         """
@@ -57,5 +66,5 @@ class APITestCase(TestCase):
         """
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

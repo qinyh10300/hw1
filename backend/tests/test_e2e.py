@@ -6,15 +6,14 @@ import unittest
 from django.core.management import call_command
 from django.test import LiveServerTestCase, override_settings
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 
 from app.settings import BASE_DIR
 from user.controllers import create_user
 from utils.jwt import encrypt_password
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
 
-
-DRIVER_PATH = "drivers/chromedriver"
+DRIVER_PATH = r"D:\codebase\se2025-hw1-test\backend\drivers\chromedriver.exe"
 FRONTEND_PATH = str(BASE_DIR.parent) + "/frontend"
 # cli = sys.modules['flask.cli']
 # cli.show_server_banner = lambda *x: None
@@ -39,21 +38,17 @@ class SeleniumTestCase(LiveServerTestCase):
         # start Chrome
         options = webdriver.ChromeOptions()
         if platform.system() == "Windows":
-            options.binary_location = (
-                r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-            )
+            options.binary_location = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
         elif platform.system() == "Linux":
             options.binary_location = "/usr/bin/google-chrome"
         elif platform.system() == "Darwin":
-            options.binary_location = (
-                "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-            )
+            options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
         else:
             raise Exception("Unknown OS")
         # options.add_argument('headless')
         # You need to change this to your actual binary path.
         # You need to change this to your actual web driver path.
-        cls.webclient = webdriver.Chrome(service=Service(DRIVER_PATH),options=options)
+        cls.webclient = webdriver.Chrome(service=Service(DRIVER_PATH), options=options)
         # delete all data in the database
         call_command("flush", "--noinput")
         create_user(
@@ -97,11 +92,11 @@ class SeleniumTestCase(LiveServerTestCase):
         time.sleep(1)
         self.webclient.find_element(By.XPATH, "//*[@id='root']/div/div[3]/div/a").click()
         time.sleep(1)
-        self.webclient.find_element(By.ID,"username").send_keys("test_thss")
+        self.webclient.find_element(By.ID, "username").send_keys("test_thss")
         time.sleep(1)
-        self.webclient.find_element(By.ID,"password").send_keys("test_thss")
+        self.webclient.find_element(By.ID, "password").send_keys("test_thss")
         time.sleep(1)
-        self.webclient.find_element(By.XPATH,'//*[@id="root"]/div/div[3]/div/button').click()
+        self.webclient.find_element(By.XPATH, '//*[@id="root"]/div/div[3]/div/button').click()
         time.sleep(3)
 
         """

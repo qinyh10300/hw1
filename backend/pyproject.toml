@@ -1,2 +1,17 @@
 # pyproject.toml
 # TODO: 补充ruff配置文件
+[tool.ruff]
+# 忽略文件夹
+exclude = [
+    ".git",
+    "__pycache__",
+    "migrations"
+]
+
+line-length = 100    # 设置单行最大长度
+
+# 特定文件的错误忽略
+per-file-ignores = {"tests/test_api.py" = ["E501"], "driver.py" = ["E501"], "user/views.py" = ["E722"], "app/settings_prod.py" = ["F401", "F403"]}
+
+# 启用检查规则类别
+select = ["E", "F", "W", "I"]
