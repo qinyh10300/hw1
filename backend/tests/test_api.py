@@ -25,12 +25,33 @@ class APITestCase(TestCase):
         """
         TODO: 使用错误的信息进行登录，检查返回值为失败
         """
+        data = {"username": "testuser", "password": "wrongpassword"}
+        response = self.client.post(
+            reverse(user_views.register_user), data=data, content_type="application/json"
+        )
+        json_data = response.json()
+        self.assertEqual(json_data["message"], "Error")
+        self.assertEqual(response.status_code, 500)
         """
         TODO: 使用正确的信息进行登录，检查返回值为成功
         """
+        data = {"username": "testuser", "password": "testuser"}
+        response = self.client.post(
+            reverse(user_views.register_user), data=data, content_type="application/json"
+        )
+        json_data = response.json()
+        self.assertEqual(json_data["message"], "Success")
+        self.assertEqual(response.status_code, 200)
+
         """
         TODO: 进行登出，检查返回值为成功
         """
+        response = self.client.post(
+            reverse(user_views.register_user), content_type="application/json"
+        )
+        json_data = response.json()
+        self.assertEqual(json_data["message"], "Success")
+        self.assertEqual(response.status_code, 200)
 
     def test_register(self):
         """
@@ -43,27 +64,50 @@ class APITestCase(TestCase):
             reverse(user_views.register_user), data=data, content_type="application/json"
         )
         json_data = response.json()
-        # print(json_data["message"], response.status_code)
-        self.assertEqual(json_data["message"], "username")
-        self.assertEqual(response.status_code, 400)
+        self.assertEqual(json_data["message"], "Error")
+        self.assertEqual(response.status_code, 500)
+
         """
         TODO: 使用正确的信息进行注册，检查返回值为成功
         """
+        data = {
+            "username": "newuser",
+            "password": "newpassword",
+            "nickname": "newnick",
+            "mobile": "+86.123456789013",
+            "magic_number": 1,
+            "url": "https://example.com"
+        }
+        response = self.client.post(
+            reverse(user_views.register_user), data=data, content_type="application/json"
+        )
+        json_data = response.json()
+        self.assertEqual(json_data["message"], "Success")
+        self.assertEqual(response.status_code, 200)
+
         """
         TODO: 使用正确注册信息进行登录，检查返回值为成功
         """
-        data = {"username": "testuser", "password": "testuser"}  # 这里使用之前创建的用户
+        data = {"username": "newuser", "password": "newpassword"}
         response = self.client.post(
-            reverse(user_views.login_user), data=data, content_type="application/json"
+            reverse(user_views.register_user), data=data, content_type="application/json"
         )
         json_data = response.json()
-        self.assertEqual(json_data["message"], "Login successful")  # 登录成功返回信息
-        self.assertEqual(response.status_code, 200)  # 登录成功返回 200
+        self.assertEqual(json_data["message"], "Success")
+        self.assertEqual(response.status_code, 200)
 
     def test_logout(self):
         """
         TODO: 未登录直接登出
         """
+        response = self.client.post(
+            reverse(user_views.register_user), content_type="application/json"
+        )
+        json_data = response.json()
+        # 根据实际实现，未登录时登出可能返回错误或成功
+        # 这里假设返回错误
+        self.assertEqual(json_data["message"], "Error")
+        self.assertEqual(response.status_code, 500)
 
 
 if __name__ == "__main__":

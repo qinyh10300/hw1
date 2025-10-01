@@ -32,7 +32,7 @@ elif platform.system() == "Darwin":
     options.binary_location = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 else:
     raise Exception("Unknown OS")
-service = Service("drivers/chromedriver")
+service = Service("drivers/chromedriver.exe")
 driver = webdriver.Chrome(service=service, options=options)
 driver.get("http://www.baidu.com")
 assert "百度" in driver.title
