@@ -3,7 +3,6 @@ import unittest
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from user import views as user_views
 from user.models import User
 from utils.jwt import encrypt_password
 
@@ -26,9 +25,7 @@ class APITestCase(TestCase):
         TODO: 使用错误的信息进行登录，检查返回值为失败
         """
         data = {"username": "newuser1", "password": "newpassword"}
-        response = self.client.patch(
-            reverse("login"), data=data, content_type="application/json"
-        )
+        response = self.client.patch(reverse("login"), data=data, content_type="application/json")
         json_data = response.json()
         self.assertEqual(response.status_code, 401)
         self.assertEqual(json_data["message"], "Invalid credentials")
@@ -36,9 +33,7 @@ class APITestCase(TestCase):
         TODO: 使用正确的信息进行登录，检查返回值为成功
         """
         data = {"username": "test_thss", "password": "test_thss"}
-        response = self.client.patch(
-            reverse("login"), data=data, content_type="application/json"
-        )
+        response = self.client.patch(reverse("login"), data=data, content_type="application/json")
         json_data = response.json()
         self.assertEqual(response.status_code, 200)
         self.assertIn("jwt", json_data)
@@ -62,9 +57,7 @@ class APITestCase(TestCase):
         在完成register_params_check后，你需要修改这里的错误信息和返回码
         """
         data = {"username": "123", "password": "21321"}
-        response = self.client.post(
-            reverse("register"), data=data, content_type="application/json"
-        )
+        response = self.client.post(reverse("register"), data=data, content_type="application/json")
         json_data = response.json()
         self.assertEqual(json_data["message"], "Invalid arguments: username")
         self.assertEqual(response.status_code, 400)
@@ -78,11 +71,9 @@ class APITestCase(TestCase):
             "nickname": "newnick",
             "mobile": "+86.123456789013",
             "magic_number": 1,
-            "url": "https://example.com"
+            "url": "https://example.com",
         }
-        response = self.client.post(
-            reverse("register"), data=data, content_type="application/json"
-        )
+        response = self.client.post(reverse("register"), data=data, content_type="application/json")
         json_data = response.json()
         self.assertEqual(json_data["message"], "ok")
         self.assertEqual(response.status_code, 200)
@@ -91,9 +82,7 @@ class APITestCase(TestCase):
         TODO: 使用正确注册信息进行登录，检查返回值为成功
         """
         data = {"username": "newuser1", "password": "newpasswordNP1*"}
-        response = self.client.patch(
-            reverse("login"), data=data, content_type="application/json"
-        )
+        response = self.client.patch(reverse("login"), data=data, content_type="application/json")
         json_data = response.json()
         self.assertEqual(response.status_code, 200)
         self.assertIn("jwt", json_data)

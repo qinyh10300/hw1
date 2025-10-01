@@ -105,15 +105,21 @@ class SeleniumTestCase(LiveServerTestCase):
         self.webclient.find_element(By.XPATH, '//*[@id="root"]/div/div[3]/div/div[1]/div/a').click()
         time.sleep(1)
         # //*[@id="root"]/div/div[3]/div/div/div[1]/div/input
-        self.webclient.find_element(By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[1]/div/input").send_keys("Hello World")
+        self.webclient.find_element(
+            By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[1]/div/input"
+        ).send_keys("Hello World")
         time.sleep(1)
         # //*[@id="root"]/div/div[3]/div/div/div[2]/div[2]/section[1]/textarea
         # //*[@id="root"]/div/div[3]/div/div/div[2]/div[2]/section[1]
-        self.webclient.find_element(By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[2]/div[2]/section[1]/textarea").send_keys("你好！")
+        self.webclient.find_element(
+            By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[2]/div[2]/section[1]/textarea"
+        ).send_keys("你好！")
         time.sleep(1)
         # //*[@id="root"]/div/div[3]/div/div/div[3]/button
         # //*[@id="root"]/div/div[3]/div/div/div[3]
-        self.webclient.find_element(By.XPATH, '//*[@id="root"]/div/div[3]/div/div/div[3]/button').click()
+        self.webclient.find_element(
+            By.XPATH, '//*[@id="root"]/div/div[3]/div/div/div[3]/button'
+        ).click()
         time.sleep(3)
 
         """
@@ -121,29 +127,41 @@ class SeleniumTestCase(LiveServerTestCase):
         """
         # //*[@id="post-main"]/div[2]/span[2]/span
         # //*[@id="post-main"]/div[2]/span[2]/span/a[1]
-        self.webclient.find_element(By.XPATH, '//*[@id="post-main"]/div[2]/span[2]/span/a[1]').click()
+        self.webclient.find_element(
+            By.XPATH, '//*[@id="post-main"]/div[2]/span[2]/span/a[1]'
+        ).click()
         time.sleep(1)
         # //*[@id="root"]/div/div[3]/div/div/div[1]/div/input
         # //*[@id="root"]/div/div[3]/div/div/div[1]/div/input
-        self.webclient.find_element(By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[1]/div/input").send_keys("!")
+        self.webclient.find_element(
+            By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[1]/div/input"
+        ).send_keys("!")
         time.sleep(1)
         # //*[@id="root"]/div/div[3]/div/div/div[2]/div[2]/section[1]/textarea
-        content_input = self.webclient.find_element(By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[2]/div[2]/section[1]/textarea")
+        content_input = self.webclient.find_element(
+            By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[2]/div[2]/section[1]/textarea"
+        )
         content_input.clear()
         time.sleep(1)
         content_input.send_keys("你好。")
         time.sleep(1)
         # //*[@id="root"]/div/div[3]/div/div/div[3]/button
-        self.webclient.find_element(By.XPATH, '//*[@id="root"]/div/div[3]/div/div/div[3]/button').click()
+        self.webclient.find_element(
+            By.XPATH, '//*[@id="root"]/div/div[3]/div/div/div[3]/button'
+        ).click()
         time.sleep(3)
 
         """
         TODO: 回复刚才的帖子，回复内容为：“你好！”
         """
-        self.webclient.find_element(By.XPATH, '//*[@id="post-main"]/div[2]/span[2]/span/a[2]').click()
+        self.webclient.find_element(
+            By.XPATH, '//*[@id="post-main"]/div[2]/span[2]/span/a[2]'
+        ).click()
         time.sleep(1)
         # //*[@id="root"]/div/div[3]/div/div/div[2]/div[2]/section[1]/textarea
-        self.webclient.find_element(By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[2]/div[2]/section[1]/textarea").send_keys("你好！")
+        self.webclient.find_element(
+            By.XPATH, "//*[@id='root']/div/div[3]/div/div/div[2]/div[2]/section[1]/textarea"
+        ).send_keys("你好！")
         time.sleep(1)
 
         """
@@ -153,7 +171,9 @@ class SeleniumTestCase(LiveServerTestCase):
         self.webclient.find_element(By.XPATH, '//*[@id="root"]/div/header/div/span/a').click()
         time.sleep(1)
         # //*[@id="root"]/div/div[3]/div/div[6]/button
-        self.webclient.find_element(By.XPATH, '//*[@id="root"]/div/div[3]/div/div[6]/button').click()
+        self.webclient.find_element(
+            By.XPATH, '//*[@id="root"]/div/div[3]/div/div[6]/button'
+        ).click()
         time.sleep(3)
 
 

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 
+
 def register_params_check(content: dict):
     # # 定义允许的字段及其对应的检查规则
     # required_fields = ["username", "password", "nickname", "mobile", "url"]
@@ -20,11 +21,15 @@ def register_params_check(content: dict):
 
     # 校验密码
     password = content["password"]
-    if "password" not in content or not isinstance(password, str) or not re.match(
-        r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_*^])[A-Za-z\d\-_*^]{8,15}$", password
+    if (
+        "password" not in content
+        or not isinstance(password, str)
+        or not re.match(
+            r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[-_*^])[A-Za-z\d\-_*^]{8,15}$", password
+        )
     ):
         return "password", False
-    
+
     # 校验昵称
     nickname = content["nickname"]
     if "nickname" not in content or not isinstance(nickname, str):
@@ -32,13 +37,25 @@ def register_params_check(content: dict):
 
     # 校验手机号
     mobile = content["mobile"]
-    if "mobile" not in content or not isinstance(mobile, str) or not re.match(r"^\+\d{2}\.\d{12}$", mobile):
+    if (
+        "mobile" not in content
+        or not isinstance(mobile, str)
+        or not re.match(r"^\+\d{2}\.\d{12}$", mobile)
+    ):
         return "mobile", False
 
     # 校验url
-    url = content["url"]
-    if "url" not in content or not isinstance(url, str) or not re.match(
-        r"^(http://|https://)[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*(\.[a-zA-Z]{2,})$", url
+    url = content.get("url")  # 先用 get 避免 KeyError
+    if (
+        "url" not in content
+        or not isinstance(url, str)
+        or not re.match(
+            r"^(http://|https://)"
+            r"[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?"
+            r"(\.[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*"
+            r"(\.[a-zA-Z]{2,})$",
+            url,
+        )
     ):
         return "url", False
 
