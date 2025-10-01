@@ -64,6 +64,7 @@ def jwt_authentication(request):
     """
     request.user = None
     token = request.headers.get("Authorization")
+    # print("token: ", token)
     if token:
         payload = verify_jwt(token)
         if payload:
@@ -85,6 +86,8 @@ def login_required(func):
             request = args[1]
         else:
             request = args[0]
+
+        # print("request: ", request)
 
         jwt_authentication(request)
         if not request.user:

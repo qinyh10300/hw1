@@ -168,9 +168,16 @@ class LoginView(APIView):
             username = content.get("username")
             password = content.get("password")
 
+            # print("username: ", username)
+            # print("password: ", password)
+
             user, result = get_user_with_pass(
                 username=username, password=encrypt_password(password)
             )
+
+            # print("user: ", user)
+            # print("result: ", result)
+
             if result:
                 jwt = generate_jwt({"user_id": user.id, "nickname": user.nickname})
                 return Response(
